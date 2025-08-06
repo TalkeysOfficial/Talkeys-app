@@ -14,6 +14,12 @@ import com.example.talkeys_new.screens.common.ScreenNotFound
 import com.example.talkeys_new.screens.events.eventDetailScreen.EventDetailScreen
 import com.example.talkeys_new.screens.home.HomeScreen
 import com.example.talkeys_new.screens.events.exploreEvents.ExploreEventsScreen
+import com.example.talkeys_new.screens.profile.ProfileScreen
+import com.example.talkeys_new.screens.profile.RegisteredEventsScreen
+import com.example.talkeys_new.screens.profile.LikedEventsScreen
+import com.example.talkeys_new.screens.profile.HostedEventsScreen
+import com.example.talkeys_new.screens.SplashScreen
+import com.example.talkeys_new.avatar.AvatarCustomizerScreen
 import com.example.talkeysapk.screensUI.home.AboutUsScreen
 import com.example.talkeysapk.screensUI.home.ContactUsScreen
 import com.example.talkeysapk.screensUI.home.TermsAndConditionsScreen
@@ -23,16 +29,22 @@ import com.example.talkeysapk.screensUI.home.privacyPolicy
 fun AppNavigation(modifier: Modifier) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "events") {
+    NavHost(navController = navController, startDestination = "splash") {
+        composable("splash") { SplashScreen(navController) }
         composable("landingpage") { LandingPage(navController) }
         composable("signup") { SignUpScreen(navController) }
         composable("login") { LoginScreen(navController) }
         composable("home") { HomeScreen(navController) }
+        composable("profile") { ProfileScreen(navController) }
+        composable("registered_events") { RegisteredEventsScreen(navController) }
+        composable("liked_events") { LikedEventsScreen(navController) }
+        composable("hosted_events") { HostedEventsScreen(navController) }
         composable("events") { ExploreEventsScreen(navController) }
         composable("contact_us") { ContactUsScreen(navController) }
         composable("about_us") { AboutUsScreen(navController) }
         composable("privacy_policy") { privacyPolicy(navController) }
         composable("tas") { TermsAndConditionsScreen(navController) }
+        composable("avatar_customizer") { AvatarCustomizerScreen(navController) }
         composable("screen_not_found"){ScreenNotFound(navController)}
 
         // Event Detail Screen with eventId parameter
@@ -61,6 +73,30 @@ fun AppNavigation(modifier: Modifier) {
             // EventRegistrationScreen(navController = navController)
             // For now, you can just show a placeholder or navigate back
         }
+
+        // Payment functionality disabled for now
+        // You can uncomment this when you need payment integration
+        /*
+        composable(
+            route = "payment/{eventId}/{eventName}/{eventPrice}",
+            arguments = listOf(
+                navArgument("eventId") { type = NavType.StringType },
+                navArgument("eventName") { type = NavType.StringType },
+                navArgument("eventPrice") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val eventId = backStackEntry.arguments?.getString("eventId") ?: ""
+            val eventName = backStackEntry.arguments?.getString("eventName") ?: ""
+            val eventPrice = backStackEntry.arguments?.getString("eventPrice") ?: "0"
+            
+            com.example.talkeys_new.screens.events.payment.EventPaymentScreen(
+                eventId = eventId,
+                eventName = eventName,
+                eventPrice = eventPrice,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        */
 
     }
 }
